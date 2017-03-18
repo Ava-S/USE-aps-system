@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -37,7 +37,8 @@ public class APS {
     //This is a list of all the products that the customer buys
     //The key is the product he bought, 
     //and the value is the quantity of this product
-    Map<Product, Integer> shoppingList = new HashMap<>();  
+    Map<Product, Integer> shoppingList = new LinkedHashMap<>();
+    Map<Product, Integer> tempShoppingList = new LinkedHashMap<>();
     Scanner input = new Scanner(System.in);
     MainFrame mainFrame = new MainFrame(this); 
     
@@ -53,7 +54,10 @@ public class APS {
     
     void addProduct(Product product){
         if (shoppingList.containsKey(product)){
-            shoppingList.put(product, shoppingList.get(product) + 1);
+            tempShoppingList.put(product, shoppingList.get(product) + 1);
+            shoppingList.remove(product);
+            shoppingList.putAll(tempShoppingList);
+                    
         } else {
             shoppingList.put(product, 1);
         }
@@ -61,7 +65,7 @@ public class APS {
     }
     
     Product[] makeDatabase(){
-        Product[] database = new Product[21];
+        Product[] database = new Product[24];
         database[0] = new Product("20005825", "Fin Carre Melkchocolade", 0.49);
         database[1] = new Product("20151737", "Fair Globe Pure Chocolade", 0.99);
         database[2] = new Product("20368197","Fin Carré Witte Chocolade", 0.49);
@@ -83,6 +87,9 @@ public class APS {
         database[18] = new Product("8718265572737","AH Kruidkoekrepen", 1.19);
         database[19] = new Product("8718906074118","AH Delicata puur 85%", 0.99);
         database[20] = new Product("5449000129918", "Nestea Green Tea", 0.70);
+        database[21] = new Product("9781118318768", "Book", 12.30); 
+        database[22] = new Product("8711000296493", "Pickwick Tea mango", 1.39);
+        database[23] = new Product("8710908928994", "Unox Cup s Soup tomaat", 1.50);
         return database;
     }
     

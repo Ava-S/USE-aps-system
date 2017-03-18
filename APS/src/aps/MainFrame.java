@@ -306,14 +306,11 @@ public class MainFrame extends javax.swing.JFrame {
                     if (p != null) {
                         aps.addProduct(p);
                     }
-                    
-                    System.out.println();
+
                     scannedString = "";
                 } else {
                     scannedString += e.getKeyChar();
                 }
-
-                System.out.println("SCANNED: " + scannedString);
             }
 
             @Override
