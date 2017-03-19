@@ -230,8 +230,20 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1PayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1PayActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(rootPane, "Your receipt will be printed");
+               
+        Object[] options = {"OK"};
+        int input = JOptionPane.showOptionDialog(rootPane,
+                "Your receipt will be printed ", "Title",
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if(input == JOptionPane.OK_OPTION){
+            //System.out.println("ok button of pay diolog is pressed");
+            //need to reset the ShoppingList for next customer
+            APS.emptyShoppingList();
+        }
     }//GEN-LAST:event_jButton1PayActionPerformed
 
     /**
