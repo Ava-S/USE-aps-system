@@ -3,7 +3,10 @@ package aps;
 import aps.Product;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -17,20 +20,25 @@ import javax.swing.JOptionPane;
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    public String scannedString = "";
     public APS aps;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame(APS aps) {
+        this.aps = aps;
         initComponents();
-        listenToKeyboard();
+        try {
+            listenToKeyboard();
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null,
+                    ex);
+        }
 
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
 
-        this.aps = aps;
+        
     }
 
     /**
@@ -327,35 +335,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     }
 
-    public void listenToKeyboard() {
-
-        this.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                int code = (int) e.getKeyChar();
-
-                if (code == 10) {
-                    Product p = aps.getProductByEan(scannedString);
-                    
-                    if (p != null) {
-                        aps.addProduct(p);
-                    }
-
-                    scannedString = "";
-                } else {
-                    scannedString += e.getKeyChar();
-                }
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-
-        });
+    public void listenToKeyboard() throws IOException {
+        this.addKeyListener(new KeyboardListeners(aps));
     }
 
 }
