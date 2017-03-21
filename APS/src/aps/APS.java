@@ -61,7 +61,7 @@ public class APS {
     }
     
     Product[] makeDatabase(){
-        Product[] database = new Product[21];
+        Product[] database = new Product[22];
         database[0] = new Product("20005825", "Fin Carre Melkchocolade", 0.49);
         database[1] = new Product("20151737", "Fair Globe Pure Chocolade", 0.99);
         database[2] = new Product("20368197","Fin Carré Witte Chocolade", 0.49);
@@ -83,6 +83,7 @@ public class APS {
         database[18] = new Product("8718265572737","AH Kruidkoekrepen", 1.19);
         database[19] = new Product("8718906074118","AH Delicata puur 85%", 0.99);
         database[20] = new Product("5449000129918", "Nestea Green Tea", 0.70);
+        database[21] = new Product("8710400169482", "Biologische Volle Melk", 1.23);
         return database;
     }
     
