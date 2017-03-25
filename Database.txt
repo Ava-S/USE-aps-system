@@ -24,3 +24,5 @@
 8710908928994; Unox Cup s Soup tomaat; 1.50
 4897005980287; USB Hub; 19.99
 00066787920; XYL-8202 Laser Scanner; 19
+8710908905353; Lipton Jasmine Lychee; 1.50
+00066787919; Scanner; 19.99

@@ -34,12 +34,15 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null,
                     ex);
         }
-
+        
+        
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
 
         
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,16 +81,20 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(25000, 25000));
+        setPreferredSize(new java.awt.Dimension(1080, 720));
 
-        MainPanel.setBackground(new java.awt.Color(209, 233, 240));
+        MainPanel.setBackground(new java.awt.Color(184, 212, 50));
+        MainPanel.setMaximumSize(new java.awt.Dimension(1080, 720));
+        MainPanel.setPreferredSize(new java.awt.Dimension(1080, 720));
 
-        jPanel2.setBackground(new java.awt.Color(244, 244, 244));
+        jPanel2.setBackground(new java.awt.Color(254, 254, 250));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jScrollPane4.setBorder(null);
 
         productPriceArea.setEditable(false);
-        productPriceArea.setBackground(new java.awt.Color(244, 244, 244));
+        productPriceArea.setBackground(new java.awt.Color(254, 254, 250));
         productPriceArea.setColumns(20);
         productPriceArea.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         productPriceArea.setLineWrap(true);
@@ -98,7 +105,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane3.setBorder(null);
 
         productNameArea.setEditable(false);
-        productNameArea.setBackground(new java.awt.Color(244, 244, 244));
+        productNameArea.setBackground(new java.awt.Color(254, 254, 250));
         productNameArea.setColumns(20);
         productNameArea.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         productNameArea.setLineWrap(true);
@@ -111,7 +118,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane2.setBorder(null);
 
         productQuantityArea.setEditable(false);
-        productQuantityArea.setBackground(new java.awt.Color(244, 244, 244));
+        productQuantityArea.setBackground(new java.awt.Color(254, 254, 250));
         productQuantityArea.setColumns(20);
         productQuantityArea.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         productQuantityArea.setLineWrap(true);
@@ -119,19 +126,19 @@ public class MainFrame extends javax.swing.JFrame {
         productQuantityArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setViewportView(productQuantityArea);
 
-        jPanel3.setBackground(new java.awt.Color(200, 200, 200));
+        jPanel3.setBackground(new java.awt.Color(237, 0, 140));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setWheelScrollingEnabled(false);
 
-        toPayArea.setEditable(false);
-        toPayArea.setBackground(new java.awt.Color(200, 200, 200));
+        toPayArea.setBackground(new java.awt.Color(237, 0, 140));
         toPayArea.setColumns(20);
-        toPayArea.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
+        toPayArea.setFont(new java.awt.Font("Monospaced", 1, 64)); // NOI18N
+        toPayArea.setForeground(new java.awt.Color(254, 254, 240));
         toPayArea.setLineWrap(true);
         toPayArea.setRows(5);
-        toPayArea.setText("To pay:");
+        toPayArea.setText("TO PAY");
         toPayArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(toPayArea);
 
@@ -140,9 +147,10 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        totalPriceArea.setBackground(new java.awt.Color(200, 200, 200));
+        totalPriceArea.setBackground(new java.awt.Color(237, 0, 140));
         totalPriceArea.setColumns(20);
-        totalPriceArea.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
+        totalPriceArea.setFont(new java.awt.Font("Monospaced", 1, 64)); // NOI18N
+        totalPriceArea.setForeground(new java.awt.Color(254, 254, 240));
         totalPriceArea.setRows(5);
         jScrollPane5.setViewportView(totalPriceArea);
 
@@ -153,13 +161,13 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
@@ -167,31 +175,35 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
+        jButton1Pay.setBackground(new java.awt.Color(237, 0, 140));
+        jButton1Pay.setForeground(new java.awt.Color(254, 254, 250));
         jButton1Pay.setText("Pay");
         jButton1Pay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,34 +216,31 @@ public class MainFrame extends javax.swing.JFrame {
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap(644, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
+                .addGap(65, 65, 65)
                 .addComponent(jButton1Pay, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
+                .addGap(58, 58, 58)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(jButton1Pay, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(348, Short.MAX_VALUE))
+                    .addComponent(jButton1Pay, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1615, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
         );
 
         pack();
@@ -337,6 +346,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void listenToKeyboard() throws IOException {
         this.addKeyListener(new KeyboardListeners(aps));
+    }
+    
+    public void setTotalPrice(String totalPrice){
+        totalPriceArea.setText(totalPrice);
     }
 
 }

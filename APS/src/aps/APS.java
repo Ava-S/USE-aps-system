@@ -21,6 +21,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -47,6 +48,7 @@ public class APS {
     Map<Product, Integer> tempShoppingList = new LinkedHashMap<>();
     Scanner input = new Scanner(System.in);
     MainFrame mainFrame = new MainFrame(this);
+       
 
     void demo() {
         try {
@@ -54,7 +56,11 @@ public class APS {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(APS.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Already there
+        mainFrame.setTotalPrice(formatPrice(0) + "\n");
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        mainFrame.dispose();
+        mainFrame.setUndecorated(true);
         mainFrame.setVisible(true);
     }
 
