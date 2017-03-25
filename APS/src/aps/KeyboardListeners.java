@@ -60,7 +60,7 @@ public class KeyboardListeners implements KeyListener {
                 System.out.println("The data you put in is this: "
                         + scannedString + " " + name + " " + price);
 
-                try (FileWriter fw = new FileWriter("C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt", true);
+                try (FileWriter fw = new FileWriter(aps.fileLocation, true);
                         BufferedWriter bw = new BufferedWriter(fw);
                         PrintWriter out = new PrintWriter(bw)) {
                     out.println("");

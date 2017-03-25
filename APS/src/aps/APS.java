@@ -48,15 +48,21 @@ public class APS {
     Map<Product, Integer> tempShoppingList = new LinkedHashMap<>();
     Scanner input = new Scanner(System.in);
     MainFrame mainFrame = new MainFrame(this);
+    String fileLocation;
+    Boolean Lisan;
        
 
     void demo() {
+        //For Ava
+        fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
+        //For Lisan
         try {
             products = makeDatabase();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(APS.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Already there
+        mainFrame.showTime();
+        mainFrame.showInstruction();
         mainFrame.setTotalPrice(formatPrice(0) + "\n");
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainFrame.dispose();
@@ -73,13 +79,13 @@ public class APS {
             shoppingList.put(product, 1);
         }
         mainFrame.showShoppingList(shoppingList);
+        mainFrame.showTime();
     }
 
     List<Product> makeDatabase() throws FileNotFoundException {
         List<Product> database = new ArrayList<>();
         Scanner s = new Scanner(
-                new File(
-                        "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt"));
+                new File(fileLocation));
         while (s.hasNext()) {
             String line = s.nextLine();
             String[] array = line.split(";");

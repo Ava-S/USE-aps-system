@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.swing.SwingConstants;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -67,7 +70,15 @@ public class MainFrame extends javax.swing.JFrame {
         toPayArea = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
         totalPriceArea = new javax.swing.JTextArea();
+        jPanel4 = new javax.swing.JPanel();
         jButton1Pay = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jButton1Help = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jButton1Help1 = new javax.swing.JButton();
+        timeGreetArea = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        instructionArea = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,6 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setWheelScrollingEnabled(false);
 
+        toPayArea.setEditable(false);
         toPayArea.setBackground(new java.awt.Color(237, 0, 140));
         toPayArea.setColumns(20);
         toPayArea.setFont(new java.awt.Font("Monospaced", 1, 64)); // NOI18N
@@ -147,11 +159,13 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
+        totalPriceArea.setEditable(false);
         totalPriceArea.setBackground(new java.awt.Color(237, 0, 140));
         totalPriceArea.setColumns(20);
         totalPriceArea.setFont(new java.awt.Font("Monospaced", 1, 64)); // NOI18N
         totalPriceArea.setForeground(new java.awt.Color(254, 254, 240));
         totalPriceArea.setRows(5);
+        totalPriceArea.setAutoscrolls(false);
         jScrollPane5.setViewportView(totalPriceArea);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -159,15 +173,15 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
@@ -194,68 +208,220 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
+        jPanel4.setBackground(new java.awt.Color(237, 0, 140));
+        jPanel4.setPreferredSize(new java.awt.Dimension(200, 160));
+
         jButton1Pay.setBackground(new java.awt.Color(237, 0, 140));
+        jButton1Pay.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
         jButton1Pay.setForeground(new java.awt.Color(254, 254, 250));
-        jButton1Pay.setText("Pay");
+        jButton1Pay.setText("PAY");
+        jButton1Pay.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1Pay.setContentAreaFilled(false);
+        jButton1Pay.setFocusable(false);
+        jButton1Pay.setMaximumSize(new java.awt.Dimension(120, 120));
+        jButton1Pay.setMinimumSize(new java.awt.Dimension(120, 120));
         jButton1Pay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1PayActionPerformed(evt);
             }
         });
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton1Pay, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 160, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton1Pay, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(237, 0, 140));
+        jPanel5.setPreferredSize(new java.awt.Dimension(200, 160));
+
+        jButton1Help.setBackground(new java.awt.Color(237, 0, 140));
+        jButton1Help.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
+        jButton1Help.setForeground(new java.awt.Color(254, 254, 250));
+        jButton1Help.setText("HELP");
+        jButton1Help.setActionCommand("");
+        jButton1Help.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1Help.setContentAreaFilled(false);
+        jButton1Help.setFocusable(false);
+        jButton1Help.setMaximumSize(new java.awt.Dimension(120, 120));
+        jButton1Help.setMinimumSize(new java.awt.Dimension(120, 120));
+        jButton1Help.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1HelpActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton1Help, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 160, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton1Help, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBackground(new java.awt.Color(237, 0, 140));
+        jPanel6.setToolTipText("");
+
+        jButton1Help1.setBackground(new java.awt.Color(237, 0, 140));
+        jButton1Help1.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
+        jButton1Help1.setForeground(new java.awt.Color(254, 254, 250));
+        jButton1Help1.setText("REMOVE");
+        jButton1Help1.setActionCommand("");
+        jButton1Help1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1Help1.setContentAreaFilled(false);
+        jButton1Help1.setFocusable(false);
+        jButton1Help1.setMaximumSize(new java.awt.Dimension(120, 120));
+        jButton1Help1.setMinimumSize(new java.awt.Dimension(120, 120));
+        jButton1Help1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1Help1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jButton1Help1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jButton1Help1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        timeGreetArea.setFont(new java.awt.Font("Monospaced", 1, 80)); // NOI18N
+        timeGreetArea.setForeground(new java.awt.Color(255, 255, 255));
+        timeGreetArea.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        timeGreetArea.setText("GOOD MORNING");
+        timeGreetArea.setToolTipText("");
+        timeGreetArea.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        jPanel7.setBackground(new java.awt.Color(237, 0, 140));
+
+        instructionArea.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        instructionArea.setForeground(new java.awt.Color(255, 255, 255));
+        instructionArea.setText("<html> <div style=\"font-family:Monospaced; font-size: 24;\">     <h1><u>How should I use this system</u></h1>     <ol> <!-- Lijst met nummers -->         <li>Put your items on the conveyor belt one by one.             Make sure the barcodes are faced towards the sides.</li>         <li>Let the APS scan all your items for you.</li>         <li>Take the items of the conveyor belt.</li>         <li>When you want to pay, click on the button 'PAY'</li>         <li>You will get a receipt, and can pay at the paying system.</li>         <li>If you want to remove an item, click on the button 'REMOVE'. Scan the product you want to remove.</li>     </ol> </div> </html>");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(instructionArea, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(instructionArea, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
         MainPanelLayout.setHorizontalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
-                .addContainerGap(644, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 42, Short.MAX_VALUE))
+                    .addComponent(timeGreetArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
-                .addComponent(jButton1Pay, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(95, 95, 95)
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(156, 156, 156))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(68, 68, 68)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1Pay, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(MainPanelLayout.createSequentialGroup()
+                                .addComponent(timeGreetArea, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 142, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1615, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1942, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1118, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1Help1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1Help1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1Help1ActionPerformed
+
+    private void jButton1HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1HelpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1HelpActionPerformed
+
     private void jButton1PayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1PayActionPerformed
-               
+
         Object[] options = {"OK"};
         int input = JOptionPane.showOptionDialog(rootPane,
-                "Your receipt will be printed ", "Title",
-                JOptionPane.PLAIN_MESSAGE,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]);
+            "Your receipt will be printed ", "Title",
+            JOptionPane.PLAIN_MESSAGE,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            options,
+            options[0]);
         if(input == JOptionPane.OK_OPTION){
             //System.out.println("ok button of pay diolog is pressed");
             //need to reset the ShoppingList for next customer
@@ -305,10 +471,17 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JLabel instructionArea;
+    private javax.swing.JButton jButton1Help;
+    private javax.swing.JButton jButton1Help1;
     private javax.swing.JButton jButton1Pay;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -317,6 +490,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea productNameArea;
     private javax.swing.JTextArea productPriceArea;
     private javax.swing.JTextArea productQuantityArea;
+    private javax.swing.JLabel timeGreetArea;
     private javax.swing.JTextArea toPayArea;
     private javax.swing.JTextArea totalPriceArea;
     // End of variables declaration//GEN-END:variables
@@ -342,6 +516,28 @@ public class MainFrame extends javax.swing.JFrame {
         productPriceArea.setText(textProductPrice);
         totalPriceArea.setText(textTotalPrice);
 
+    }
+    
+    public void showTime(){
+        String greeting;
+        GregorianCalendar gc = new GregorianCalendar();
+        int hour = gc.get(GregorianCalendar.HOUR_OF_DAY); 
+        if (hour < 12){
+            greeting = "GOOD MORNING";
+        } else if (hour >= 12 && hour < 18){
+            greeting = "GOOD AFTERNOON";
+        } else {
+            greeting = "GOOD EVENING";
+        }
+        timeGreetArea.setText(greeting); 
+    }
+    
+    public void showInstruction(){
+        String instruction;
+        instruction = "<html> <h3> How should I use this system? </h3> <br> "
+                + "<p> <ol> <li> Put all your products one by one on the conveyor belt. <br>"
+                + "Make sure the barcodes are faced towards the sides of the conveyor belt. </li></ol> </p> </html>";
+        //instructionArea.setText(instruction);
     }
 
     public void listenToKeyboard() throws IOException {
