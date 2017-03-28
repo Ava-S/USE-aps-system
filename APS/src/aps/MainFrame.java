@@ -59,6 +59,8 @@ public class MainFrame extends javax.swing.JFrame {
         firstTimeRemove = true;
     }
     
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -481,7 +483,27 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1RemoveActionPerformed
-        // TODO add your handling code here:
+        jFrame3.setLocationRelativeTo(null);
+        jFrame3.add(jLabel3);
+        jFrame3.setSize(260, 30);
+        jFrame3.getContentPane().setBackground(Color.yellow);
+        if ( firstTimeRemove ){
+            jFrame3.setUndecorated(true);
+            firstTimeRemove = false;
+        }
+        jFrame3.setVisible(true);
+       
+        Timer timer = new Timer(2000, new ActionListener() {
+           
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jFrame3.setVisible(false);
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+       
+        aps.setRemoveBoolean(true);
     }//GEN-LAST:event_jButton1RemoveActionPerformed
 
     private void jButton1HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1HelpActionPerformed
