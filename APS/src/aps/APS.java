@@ -54,9 +54,9 @@ public class APS {
 
     void demo() {
         //For Ava
-        fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
-        //For Lisan
         //fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
+        //For Lisan
+        fileLocation = "C:\\Users\\s153944\\Documents\\GitHub\\USE-aps-system\\database.txt";
         try {
             products = makeDatabase();
         } catch (FileNotFoundException ex) {
