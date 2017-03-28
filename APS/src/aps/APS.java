@@ -83,9 +83,14 @@ public class APS {
                 shoppingList.put(product, 1);
             }
         } else {
+            int temp;
             tempShoppingList.put(product, shoppingList.get(product) - 1);
+            temp = tempShoppingList.get(product);
             shoppingList.remove(product);
-            shoppingList.putAll(tempShoppingList);
+            if (temp > 0){
+                shoppingList.putAll(tempShoppingList);
+            }
+            remove = false;
         }
         mainFrame.showShoppingList(shoppingList);
         mainFrame.showTime();
