@@ -49,18 +49,21 @@ public class APS {
     Scanner input = new Scanner(System.in);
     MainFrame mainFrame = new MainFrame(this);
     String fileLocation;
-    Boolean Lisan;
+    Boolean remove = false;
        
 
     void demo() {
         //For Ava
         fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
         //For Lisan
+        //fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
         try {
             products = makeDatabase();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(APS.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mainFrame.setFirstTimePay();
+        mainFrame.setFirstTimeRemove();
         mainFrame.showTime();
         mainFrame.showInstruction();
         mainFrame.setTotalPrice(formatPrice(0) + "\n");
@@ -71,12 +74,18 @@ public class APS {
     }
 
     void addProduct(Product product) {
-        if (shoppingList.containsKey(product)) {
-            tempShoppingList.put(product, shoppingList.get(product) + 1);
+        if (!remove) {
+            if (shoppingList.containsKey(product)) {
+                tempShoppingList.put(product, shoppingList.get(product) + 1);
+                shoppingList.remove(product);
+                shoppingList.putAll(tempShoppingList);
+            } else {
+                shoppingList.put(product, 1);
+            }
+        } else {
+            tempShoppingList.put(product, shoppingList.get(product) - 1);
             shoppingList.remove(product);
             shoppingList.putAll(tempShoppingList);
-        } else {
-            shoppingList.put(product, 1);
         }
         mainFrame.showShoppingList(shoppingList);
         mainFrame.showTime();
@@ -159,5 +168,9 @@ public class APS {
         String[] args;
         args = new String[1];
         main(args);
+    }
+    
+    public void setRemoveBoolean(boolean remove){
+        this.remove = remove;
     }
 }

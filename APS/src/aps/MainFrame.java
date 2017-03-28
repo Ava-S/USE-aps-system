@@ -1,6 +1,9 @@
 package aps;
 
 import aps.Product;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -11,6 +14,7 @@ import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -24,6 +28,8 @@ import javax.swing.SwingConstants;
 public class MainFrame extends javax.swing.JFrame {
 
     public APS aps;
+    private boolean firstTimePay;
+    private boolean firstTimeRemove;
 
     /**
      * Creates new form MainFrame
@@ -45,6 +51,13 @@ public class MainFrame extends javax.swing.JFrame {
         
     }
     
+    public void setFirstTimePay(){
+        firstTimePay = true;
+    }
+    
+    public void setFirstTimeRemove(){
+        firstTimeRemove = true;
+    }
     
 
     /**
@@ -57,6 +70,12 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jFrame1 = new javax.swing.JFrame();
+        jLabel1 = new javax.swing.JLabel();
+        jFrame2 = new javax.swing.JFrame();
+        jLabel2 = new javax.swing.JLabel();
+        jFrame3 = new javax.swing.JFrame();
+        jLabel3 = new javax.swing.JLabel();
         MainPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -75,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jButton1Help = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        jButton1Help1 = new javax.swing.JButton();
+        jButton1Remove = new javax.swing.JButton();
         timeGreetArea = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         instructionArea = new javax.swing.JLabel();
@@ -89,6 +108,63 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        jLabel1.setText("Your receipt will be printed.");
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(197, Short.MAX_VALUE))
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(170, Short.MAX_VALUE))
+        );
+
+        jLabel2.setText("Someone will come tp help you.");
+
+        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
+        jFrame2.getContentPane().setLayout(jFrame2Layout);
+        jFrame2Layout.setHorizontalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame2Layout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(jLabel2)
+                .addContainerGap(98, Short.MAX_VALUE))
+        );
+        jFrame2Layout.setVerticalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame2Layout.createSequentialGroup()
+                .addGap(106, 106, 106)
+                .addComponent(jLabel2)
+                .addContainerGap(178, Short.MAX_VALUE))
+        );
+
+        jLabel3.setText("Scan the product to remove.");
+
+        javax.swing.GroupLayout jFrame3Layout = new javax.swing.GroupLayout(jFrame3.getContentPane());
+        jFrame3.getContentPane().setLayout(jFrame3Layout);
+        jFrame3Layout.setHorizontalGroup(
+            jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame3Layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addComponent(jLabel3)
+                .addContainerGap(161, Short.MAX_VALUE))
+        );
+        jFrame3Layout.setVerticalGroup(
+            jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame3Layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(jLabel3)
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -286,19 +362,19 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(237, 0, 140));
         jPanel6.setToolTipText("");
 
-        jButton1Help1.setBackground(new java.awt.Color(237, 0, 140));
-        jButton1Help1.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
-        jButton1Help1.setForeground(new java.awt.Color(254, 254, 250));
-        jButton1Help1.setText("REMOVE");
-        jButton1Help1.setActionCommand("");
-        jButton1Help1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1Help1.setContentAreaFilled(false);
-        jButton1Help1.setFocusable(false);
-        jButton1Help1.setMaximumSize(new java.awt.Dimension(120, 120));
-        jButton1Help1.setMinimumSize(new java.awt.Dimension(120, 120));
-        jButton1Help1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1Remove.setBackground(new java.awt.Color(237, 0, 140));
+        jButton1Remove.setFont(new java.awt.Font("Monospaced", 1, 48)); // NOI18N
+        jButton1Remove.setForeground(new java.awt.Color(254, 254, 250));
+        jButton1Remove.setText("REMOVE");
+        jButton1Remove.setActionCommand("");
+        jButton1Remove.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1Remove.setContentAreaFilled(false);
+        jButton1Remove.setFocusable(false);
+        jButton1Remove.setMaximumSize(new java.awt.Dimension(120, 120));
+        jButton1Remove.setMinimumSize(new java.awt.Dimension(120, 120));
+        jButton1Remove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1Help1ActionPerformed(evt);
+                jButton1RemoveActionPerformed(evt);
             }
         });
 
@@ -307,12 +383,12 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jButton1Help1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1Remove, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1Help1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jButton1Remove, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         timeGreetArea.setFont(new java.awt.Font("Monospaced", 1, 80)); // NOI18N
@@ -385,7 +461,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 142, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -398,35 +474,49 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1118, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1Help1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1Help1ActionPerformed
+    private void jButton1RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1RemoveActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1Help1ActionPerformed
+    }//GEN-LAST:event_jButton1RemoveActionPerformed
 
     private void jButton1HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1HelpActionPerformed
-        // TODO add your handling code here:
+        jFrame2.setLocationRelativeTo(null);
+        jFrame2.add(jLabel2);
+        jFrame2.pack();
+        jFrame2.setVisible(true);
     }//GEN-LAST:event_jButton1HelpActionPerformed
 
     private void jButton1PayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1PayActionPerformed
 
-        Object[] options = {"OK"};
-        int input = JOptionPane.showOptionDialog(rootPane,
-            "Your receipt will be printed ", "Title",
-            JOptionPane.PLAIN_MESSAGE,
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            options,
-            options[0]);
-        if(input == JOptionPane.OK_OPTION){
-            //System.out.println("ok button of pay diolog is pressed");
-            //need to reset the ShoppingList for next customer
-            APS.emptyShoppingList();
+        jFrame1.setLocationRelativeTo(null);
+        jFrame1.add(jLabel1);
+        //jFrame1.pack();
+        jFrame1.setSize(180, 50);
+        jFrame1.getContentPane().setBackground(Color.red);
+        if ( firstTimePay ){
+        jFrame1.setUndecorated(true);
+        firstTimePay = false;
         }
+        jFrame1.setVisible(true);
+ 
+        Timer timer = new Timer(2000, new ActionListener() {
+ 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Clear text or whatever you want
+                jFrame1.setVisible(false);
+                APS.emptyShoppingList();
+            }
+        });
+        // start Tick-Tack
+        timer.setRepeats(false);
+        timer.start();
+        
     }//GEN-LAST:event_jButton1PayActionPerformed
 
     /**
@@ -473,8 +563,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel MainPanel;
     private javax.swing.JLabel instructionArea;
     private javax.swing.JButton jButton1Help;
-    private javax.swing.JButton jButton1Help1;
     private javax.swing.JButton jButton1Pay;
+    private javax.swing.JButton jButton1Remove;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JFrame jFrame2;
+    private javax.swing.JFrame jFrame3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
