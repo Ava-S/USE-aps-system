@@ -54,9 +54,9 @@ public class APS {
 
     void demo() {
         //For Ava
-        fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
-        //For Lisan
         //fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
+        //For Lisan
+        fileLocation = "C:\\Users\\s153944\\Documents\\GitHub\\USE-aps-system\\database.txt";
         try {
             products = makeDatabase();
         } catch (FileNotFoundException ex) {
@@ -83,9 +83,14 @@ public class APS {
                 shoppingList.put(product, 1);
             }
         } else {
+            int temp;
             tempShoppingList.put(product, shoppingList.get(product) - 1);
+            temp = tempShoppingList.get(product);
             shoppingList.remove(product);
-            shoppingList.putAll(tempShoppingList);
+            if (temp > 0){
+                shoppingList.putAll(tempShoppingList);
+            }
+            remove = false;
         }
         mainFrame.showShoppingList(shoppingList);
         mainFrame.showTime();
