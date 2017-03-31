@@ -1,18 +1,31 @@
 package aps;
 
+import static aps.APS.formatPrice;
 import aps.Product;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -30,7 +43,9 @@ public class MainFrame extends javax.swing.JFrame {
     public APS aps;
     private boolean firstTimePay;
     private boolean firstTimeRemove;
-
+    private boolean firstTimeHelp;
+    private boolean firstTimeActuallyRemove;
+    private boolean firstTimeNewProduct;
     /**
      * Creates new form MainFrame
      */
@@ -43,24 +58,31 @@ public class MainFrame extends javax.swing.JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null,
                     ex);
         }
-        
-        
+
         this.setFocusable(true);
         this.setFocusTraversalKeysEnabled(false);
 
-        
     }
-    
-    public void setFirstTimePay(){
+
+    public void setFirstTimePay() {
         firstTimePay = true;
     }
-    
-    public void setFirstTimeRemove(){
+
+    public void setFirstTimeRemove() {
         firstTimeRemove = true;
     }
-    
-    
-    
+
+    public void setFirstTimeHelp() {
+        firstTimeHelp = true;
+    }
+
+    public void setFirstTimeActuallyRemove() {
+        firstTimeActuallyRemove = true;
+    }
+
+    public void setFirstTimeNewProduct() {
+        firstTimeNewProduct = true;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -78,6 +100,35 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jFrame3 = new javax.swing.JFrame();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        jPanel10 = new javax.swing.JPanel();
+        okButton = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        cancelButton = new javax.swing.JButton();
+        incorrectLabel = new javax.swing.JLabel();
+        jFrame4 = new javax.swing.JFrame();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        listOfItems = new javax.swing.JList<>();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        cancelFrame4Button = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        removeFrame4Button = new javax.swing.JButton();
+        jPanel15 = new javax.swing.JPanel();
+        removeAllFrame4Button = new javax.swing.JButton();
+        jFrame5 = new javax.swing.JFrame();
+        jLabel6 = new javax.swing.JLabel();
+        priceField = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        maxCharLabel = new javax.swing.JLabel();
+        seperatorLabel = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        cancelFrame5Button = new javax.swing.JButton();
+        jPanel12 = new javax.swing.JPanel();
+        addButton = new javax.swing.JButton();
         MainPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -112,8 +163,8 @@ public class MainFrame extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
-        jLabel1.setText(" Your receipt will be printed.");
+        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 36)); // NOI18N
+        jLabel1.setText("Your receipt will be printed.");
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -126,8 +177,8 @@ public class MainFrame extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jLabel2.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
-        jLabel2.setText(" Someone will come tp help you.");
+        jLabel2.setFont(new java.awt.Font("Monospaced", 0, 36)); // NOI18N
+        jLabel2.setText("Someone will come to help you.");
 
         javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
         jFrame2.getContentPane().setLayout(jFrame2Layout);
@@ -137,21 +188,378 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jFrame2Layout.setVerticalGroup(
             jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jLabel3.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
-        jLabel3.setText(" Scan the product to remove.");
+        jFrame3.setPreferredSize(new java.awt.Dimension(900, 350));
+        jFrame3.setSize(new java.awt.Dimension(900, 350));
+
+        jLabel3.setFont(new java.awt.Font("Monospaced", 0, 36)); // NOI18N
+        jLabel3.setText("An employee will come to help you.");
+
+        jLabel4.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        jLabel4.setText("Enter the password:");
+
+        passwordField.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+
+        jPanel10.setBackground(new java.awt.Color(237, 0, 140));
+
+        okButton.setBackground(new java.awt.Color(237, 0, 140));
+        okButton.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        okButton.setForeground(new java.awt.Color(255, 255, 255));
+        okButton.setText("OK");
+        okButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        okButton.setContentAreaFilled(false);
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        jPanel8.setBackground(new java.awt.Color(237, 0, 140));
+
+        cancelButton.setBackground(new java.awt.Color(237, 0, 140));
+        cancelButton.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        cancelButton.setForeground(new java.awt.Color(255, 255, 255));
+        cancelButton.setText("CANCEL");
+        cancelButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelButton.setContentAreaFilled(false);
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        incorrectLabel.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        incorrectLabel.setForeground(new java.awt.Color(255, 0, 0));
+        incorrectLabel.setText("Incorrect password");
 
         javax.swing.GroupLayout jFrame3Layout = new javax.swing.GroupLayout(jFrame3.getContentPane());
         jFrame3.getContentPane().setLayout(jFrame3Layout);
         jFrame3Layout.setHorizontalGroup(
             jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame3Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(incorrectLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jFrame3Layout.setVerticalGroup(
             jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+            .addGroup(jFrame3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGroup(jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(incorrectLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jFrame4.setSize(new java.awt.Dimension(900, 900));
+
+        listOfItems.setBackground(new java.awt.Color(240, 240, 240));
+        listOfItems.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        jScrollPane6.setViewportView(listOfItems);
+
+        jLabel5.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        jLabel5.setText("Select the item you want to remove.");
+
+        jPanel11.setBackground(new java.awt.Color(237, 0, 140));
+
+        cancelFrame4Button.setBackground(new java.awt.Color(237, 0, 140));
+        cancelFrame4Button.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        cancelFrame4Button.setForeground(new java.awt.Color(255, 255, 255));
+        cancelFrame4Button.setText("CANCEL");
+        cancelFrame4Button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelFrame4Button.setContentAreaFilled(false);
+        cancelFrame4Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelFrame4ButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cancelFrame4Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cancelFrame4Button, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel9.setBackground(new java.awt.Color(237, 0, 140));
+
+        removeFrame4Button.setBackground(new java.awt.Color(237, 0, 140));
+        removeFrame4Button.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        removeFrame4Button.setForeground(new java.awt.Color(255, 255, 255));
+        removeFrame4Button.setText("REMOVE ONE");
+        removeFrame4Button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        removeFrame4Button.setContentAreaFilled(false);
+        removeFrame4Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeFrame4ButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(removeFrame4Button, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(removeFrame4Button, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+        );
+
+        jPanel15.setBackground(new java.awt.Color(237, 0, 140));
+
+        removeAllFrame4Button.setBackground(new java.awt.Color(237, 0, 140));
+        removeAllFrame4Button.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        removeAllFrame4Button.setForeground(new java.awt.Color(255, 255, 255));
+        removeAllFrame4Button.setText("REMOVE ALL");
+        removeAllFrame4Button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        removeAllFrame4Button.setContentAreaFilled(false);
+        removeAllFrame4Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeAllFrame4ButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addComponent(removeAllFrame4Button, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(removeAllFrame4Button, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout jFrame4Layout = new javax.swing.GroupLayout(jFrame4.getContentPane());
+        jFrame4.getContentPane().setLayout(jFrame4Layout);
+        jFrame4Layout.setHorizontalGroup(
+            jFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jFrame4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame4Layout.createSequentialGroup()
+                .addContainerGap(335, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        jFrame4Layout.setVerticalGroup(
+            jFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 663, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53)
+                .addGroup(jFrame4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel6.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        jLabel6.setText("<html> The product you scanned is not in the database yet. <br> Add your product. </html>");
+
+        priceField.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        priceField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                priceFieldActionPerformed(evt);
+            }
+        });
+
+        nameField.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        nameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        jLabel7.setText("Product price:");
+
+        jLabel8.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        jLabel8.setText("Product name:");
+
+        maxCharLabel.setFont(new java.awt.Font("Monospaced", 0, 13)); // NOI18N
+        maxCharLabel.setText("Maximum of 20 characters");
+
+        seperatorLabel.setFont(new java.awt.Font("Monospaced", 0, 13)); // NOI18N
+        seperatorLabel.setText("Use . as seperator");
+
+        jPanel13.setBackground(new java.awt.Color(237, 0, 140));
+
+        cancelFrame5Button.setBackground(new java.awt.Color(237, 0, 140));
+        cancelFrame5Button.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        cancelFrame5Button.setForeground(new java.awt.Color(255, 255, 255));
+        cancelFrame5Button.setText("CANCEL");
+        cancelFrame5Button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cancelFrame5Button.setContentAreaFilled(false);
+        cancelFrame5Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelFrame5ButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addComponent(cancelFrame5Button, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(cancelFrame5Button, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+        );
+
+        jPanel12.setBackground(new java.awt.Color(237, 0, 140));
+
+        addButton.setBackground(new java.awt.Color(237, 0, 140));
+        addButton.setFont(new java.awt.Font("Monospaced", 1, 24)); // NOI18N
+        addButton.setForeground(new java.awt.Color(255, 255, 255));
+        addButton.setText("ADD");
+        addButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        addButton.setContentAreaFilled(false);
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout jFrame5Layout = new javax.swing.GroupLayout(jFrame5.getContentPane());
+        jFrame5.getContentPane().setLayout(jFrame5Layout);
+        jFrame5Layout.setHorizontalGroup(
+            jFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame5Layout.createSequentialGroup()
+                .addGroup(jFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jFrame5Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maxCharLabel)
+                            .addComponent(seperatorLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jFrame5Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30))
+        );
+        jFrame5Layout.setVerticalGroup(
+            jFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jFrame5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(jFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jFrame5Layout.createSequentialGroup()
+                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jFrame5Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(8, 8, 8)
+                        .addComponent(maxCharLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(seperatorLabel)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(jFrame5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -466,63 +874,126 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1RemoveActionPerformed
-        jFrame3.setLocationRelativeTo(null);
-        jFrame3.add(jLabel3);
-        jFrame3.setSize(400, 54);
-        jFrame3.getContentPane().setBackground(Color.yellow);
-        if ( firstTimeRemove ){
-            jFrame3.setUndecorated(true);
-            firstTimeRemove = false;
-        }
-        jFrame3.setVisible(true);
-       
-        Timer timer = new Timer(2000, new ActionListener() {
-           
+        createFrame(jFrame3, jLabel3, firstTimeRemove);
+        jLabel4.setHorizontalAlignment(JLabel.RIGHT);
+        incorrectLabel.setVisible(false);
+        firstTimeRemove = false;
+    }//GEN-LAST:event_jButton1RemoveActionPerformed
+
+    private void jButton1HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1HelpActionPerformed
+        createFrame(jFrame2, jLabel2, firstTimeHelp);
+        firstTimeHelp = false;
+        Timer timer = new Timer(3000, new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-                jFrame3.setVisible(false);
+                jFrame2.setVisible(false);
             }
         });
         timer.setRepeats(false);
         timer.start();
-       
-        aps.setRemoveBoolean(true);
-    }//GEN-LAST:event_jButton1RemoveActionPerformed
-
-    private void jButton1HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1HelpActionPerformed
-        jFrame2.setLocationRelativeTo(null);
-        jFrame2.add(jLabel2);
-        jFrame2.pack();
-        jFrame2.setVisible(true);
     }//GEN-LAST:event_jButton1HelpActionPerformed
 
     private void jButton1PayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1PayActionPerformed
-
-        jFrame1.setLocationRelativeTo(null);
-        jFrame1.add(jLabel1);
-        //jFrame1.pack();
-        jFrame1.setSize(420, 50);
-        jFrame1.getContentPane().setBackground(Color.red);
-        if ( firstTimePay ){
-        jFrame1.setUndecorated(true);
+        createFrame(jFrame1, jLabel1, firstTimePay);
         firstTimePay = false;
-        }
-        jFrame1.setVisible(true);
- 
-        Timer timer = new Timer(2000, new ActionListener() {
- 
+
+        Timer timer = new Timer(5000, new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Clear text or whatever you want
                 jFrame1.setVisible(false);
-                APS.emptyShoppingList();
+                aps.emptyShoppingList();
             }
         });
         // start Tick-Tack
         timer.setRepeats(false);
         timer.start();
-        
+
     }//GEN-LAST:event_jButton1PayActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        jFrame3.setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        char[] input = passwordField.getPassword();
+        if (isPasswordCorrect(input)) {
+            System.out.println("Success! You typed the right password.");
+            incorrectLabel.setVisible(false);
+            jFrame3.setVisible(false);
+            createAndShowFrame4();
+        } else {
+            incorrectLabel.setVisible(true);
+            System.out.println("incorrect");
+        }
+        
+        passwordField.setText("");
+    }//GEN-LAST:event_okButtonActionPerformed
+
+    private void cancelFrame4ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelFrame4ButtonActionPerformed
+        jFrame4.setVisible(false);
+        incorrectLabel.setVisible(false);
+        passwordField.setText("");
+    }//GEN-LAST:event_cancelFrame4ButtonActionPerformed
+
+    private void removeFrame4ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFrame4ButtonActionPerformed
+        String selectedItem = listOfItems.getSelectedValue();
+        Product productToRemove = aps.getProductByName(selectedItem);
+        aps.removeProduct(productToRemove);
+        jFrame4.setVisible(false);
+        //aps.removeProduct(productToRemove);
+    }//GEN-LAST:event_removeFrame4ButtonActionPerformed
+
+    private void removeAllFrame4ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeAllFrame4ButtonActionPerformed
+        String selectedItem = listOfItems.getSelectedValue();
+        Product productToRemove = aps.getProductByName(selectedItem);
+        aps.removeProductAll(productToRemove);
+        jFrame4.setVisible(false);
+    }//GEN-LAST:event_removeAllFrame4ButtonActionPerformed
+
+    private void priceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_priceFieldActionPerformed
+
+    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameFieldActionPerformed
+
+    private void cancelFrame5ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelFrame5ButtonActionPerformed
+        jFrame5.setVisible(false);
+    }//GEN-LAST:event_cancelFrame5ButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        String productName = nameField.getText();
+        if (productName.length() == 0){
+            maxCharLabel.setText("<html> <font color=\"red\"> Provide a name for the product. </font> </html>");
+        } else if (productName.length() > 20){
+            maxCharLabel.setText("<html> <font color=\"red\"> Exceeded 20 characters. </font> </html>");
+        } else {
+            maxCharLabel.setText("Maximum of 20 characters");
+            String productPrice = priceField.getText();
+            if (productPrice.contains(",")){
+                seperatorLabel.setText("<html> <font color=\"red\"> Don't use , as seperator. </font> </html>");
+            } else if (productPrice.length() == 0){
+                seperatorLabel.setText("<html> <font color=\"red\"> Provide a price for the product. </font> </html>");
+            } else if (!productPrice.matches("[0-9.]+")) {
+                seperatorLabel.setText("<html> <font color=\"red\"> Don't use letters in the price. </font> </html>");
+            } else {
+                seperatorLabel.setText("Use . as seperator.");
+                if (!productPrice.contains(".")){
+                    productPrice += ".00";
+                }
+                aps.addNewProduct(productName, productPrice);
+                jFrame5.setVisible(false);
+            }
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -566,6 +1037,11 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton cancelFrame4Button;
+    private javax.swing.JButton cancelFrame5Button;
+    private javax.swing.JLabel incorrectLabel;
     private javax.swing.JLabel instructionArea;
     private javax.swing.JButton jButton1Help;
     private javax.swing.JButton jButton1Pay;
@@ -573,80 +1049,174 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;
+    private javax.swing.JFrame jFrame4;
+    private javax.swing.JFrame jFrame5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JList<String> listOfItems;
+    private javax.swing.JLabel maxCharLabel;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JButton okButton;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField priceField;
     private javax.swing.JTextArea productNameArea;
     private javax.swing.JTextArea productPriceArea;
     private javax.swing.JTextArea productQuantityArea;
+    private javax.swing.JButton removeAllFrame4Button;
+    private javax.swing.JButton removeFrame4Button;
+    private javax.swing.JLabel seperatorLabel;
     private javax.swing.JLabel timeGreetArea;
     private javax.swing.JTextArea toPayArea;
     private javax.swing.JTextArea totalPriceArea;
     // End of variables declaration//GEN-END:variables
 
-    public void showShoppingList(Map<Product, Integer> shoppingList) {
+    public void showShoppingList() {
 
         String textProductName = "";
         String textProductQuantity = "";
         String textProductPrice = "";
         String textTotalPrice = aps.getTotal();
-
-        for (Map.Entry<Product, Integer> entry
-                : shoppingList.entrySet()) {
-            Product p = entry.getKey();
-
+        
+        for (int i = 0; i < aps.sortedShoppingList.size(); i++){
+            Product p = aps.sortedShoppingList.get(i);
+            int quantity = aps.shoppingList.get(p);
             textProductName += p.getName() + "\n";
-            textProductQuantity += entry.getValue() + "x \n";
-            textProductPrice += APS.formatPrice(entry.getValue() * p.getPrice()) + "\n";
+            textProductQuantity += quantity + "x \n";
+            textProductPrice += APS.formatPrice(quantity * p.getPrice())
+                    + "\n"; 
         }
+//        for (Map.Entry<Product, Integer> entry
+//                : aps.shoppingList.entrySet()) {
+//            Product p = entry.getKey();
+//
+//            textProductName += p.getName() + "\n";
+//            textProductQuantity += entry.getValue() + "x \n";
+//            textProductPrice += APS.formatPrice(entry.getValue() * p.getPrice())
+//                    + "\n";
+//        }
 
         productNameArea.setText(textProductName);
         productQuantityArea.setText(textProductQuantity);
         productPriceArea.setText(textProductPrice);
         totalPriceArea.setText(textTotalPrice);
+        this.showTime();
 
     }
-    
-    public void showTime(){
+
+    public void showTime() {
         String greeting;
         GregorianCalendar gc = new GregorianCalendar();
-        int hour = gc.get(GregorianCalendar.HOUR_OF_DAY); 
-        if (hour < 12){
+        int hour = gc.get(GregorianCalendar.HOUR_OF_DAY);
+        if (hour < 12) {
             greeting = "GOOD MORNING";
-        } else if (hour >= 12 && hour < 18){
+        } else if (hour >= 12 && hour < 18) {
             greeting = "GOOD AFTERNOON";
         } else {
             greeting = "GOOD EVENING";
         }
-        timeGreetArea.setText(greeting); 
-    }
-    
-    public void showInstruction(){
-        String instruction;
-        instruction = "<html> <h3> How should I use this system? </h3> <br> "
-                + "<p> <ol> <li> Put all your products one by one on the conveyor belt. <br>"
-                + "Make sure the barcodes are faced towards the sides of the conveyor belt. </li></ol> </p> </html>";
-        //instructionArea.setText(instruction);
+        timeGreetArea.setText(greeting);
     }
 
     public void listenToKeyboard() throws IOException {
         this.addKeyListener(new KeyboardListeners(aps));
     }
-    
-    public void setTotalPrice(String totalPrice){
+
+    public void setTotalPrice(String totalPrice) {
         totalPriceArea.setText(totalPrice);
+        totalPriceArea.setVisible(true);
+    }
+
+    public void createFrame(JFrame frame, JLabel label, boolean firstTime) {
+        label.setHorizontalAlignment(JLabel.CENTER);
+        frame.add(label);
+        frame.setSize(900, 350);
+        frame.getRootPane().setBorder(BorderFactory.
+                createMatteBorder(4, 4, 4, 4, Color.BLACK));
+        frame.setLocationRelativeTo(null);
+//        jFrame2.pack();
+        if (firstTime) {
+            frame.setUndecorated(true);
+            firstTime = false;
+        }
+        frame.setVisible(true);
+    }
+
+    private static boolean isPasswordCorrect(char[] input) {
+        boolean isCorrect = true;
+        char[] correctPassword = {'v', 'a', 'n', 'i', 's', 'h'};
+
+        if (input.length != correctPassword.length) {
+            isCorrect = false;
+        } else {
+            isCorrect = Arrays.equals(input, correctPassword);
+        }
+
+        //Zero out the password.
+        Arrays.fill(correctPassword, '0');
+
+        return isCorrect;
+    }
+
+    private void createList(JList list) {
+        DefaultListModel listModel = new DefaultListModel();
+
+        for (Map.Entry<Product, Integer> entry
+                : aps.shoppingList.entrySet()) {
+            Product p = entry.getKey();
+            String productName = p.getName();
+            listModel.addElement(productName);
+        }
+
+        list.setModel(listModel);
+
+        DefaultListSelectionModel m = new DefaultListSelectionModel();
+        m.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        m.setLeadAnchorNotificationEnabled(false);
+        list.setSelectionModel(m);
+    }
+
+    private void createAndShowFrame4() {
+        createFrame(jFrame4, jLabel5, firstTimeActuallyRemove);
+        firstTimeActuallyRemove = false;
+
+        jFrame4.setSize(900, 900);
+        jFrame4.setLocationRelativeTo(null);
+
+        createList(listOfItems);
+        jFrame4.setVisible(true);
+    }
+    
+    public void createAndShowFrame5() {
+        createFrame(jFrame5, jLabel6, firstTimeNewProduct);
+        firstTimeNewProduct = false;
+
+        jFrame5.setVisible(true);
     }
 
 }

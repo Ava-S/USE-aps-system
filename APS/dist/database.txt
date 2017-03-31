@@ -1,0 +1,34 @@
+20005825;Fin Carre Melkchocolade; 0.49
+20151737;Fair Globe Pure Chocolade; 0.99
+20368197;Fin Carré Witte Chocolade; 0.49
+87157260;Heinz Tomato ketchup topdown; 2.48
+4084500636293L;Dreft afwasmiddel aloe-komkommer; 2.29
+5410056195349L;Devos Lemmens Mayonaise; 2.99
+8718906074125L;AH Delicata chocolade extra puur 72%; 0.99
+5410091711856;Witte Reus Keukenreiniger; 2.79
+5412322650002;Jacques Matinettes puur; 1.89
+8000430900231;Galbani Mozzarella di latte di bufalo; 2.31
+8002270014901;San Pellegrino Mineraalwater 6x1l; 2.29
+20151737;Fair Globe Pure Chocolade; 0.99
+8710400165385;AH Olijfolie Extra Vierge 1l; 5.85
+8710400243748;AH Frambozen; 1.99
+8710400456766;AH Oosterse wok olie; 2.59
+8710400688105;AH Biologisch Kikkererwten; 0.89
+8710400842895;Tivall Vega falafel; 2.89
+8711000351116;DE Espresso Oploskoffie; 3.99
+8718265572737;AH Kruidkoekrepen; 1.19
+8718906074118;AH Delicata puur 85%; 0.99
+5449000129918;Nestea Green Tea; 0.70
+9781118318768;Book; 12.30
+8711000296493;Pickwick Tea mango; 1.39
+8710908928994;Unox Cup s Soup tomaat; 1.50
+4897005980287;USB Hub; 19.99
+00066787920;XYL-8202 Laser Scanner; 19
+8710908905353;Lipton Jasmine Lychee; 1.50
+00066787919;Scanner; 19.99
+87157574;KC Go Lemon; 2.99
+8712100619922; Lipton Earl Grey; 1.89
+8718265743489; AH Melba Toast; 0.71
+8727500033094; Blooker Cacao; 1.89
+60200340; Thumb Wrestling; 9.99
+87304220; Boer'n Yoghurt; 1.50

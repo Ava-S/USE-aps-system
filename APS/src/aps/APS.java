@@ -7,8 +7,12 @@ package aps;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -44,19 +48,18 @@ public class APS {
     //This is a list of all the products that the customer buys
     //The key is the product he bought, 
     //and the value is the quantity of this product
-    static Map<Product, Integer> shoppingList = new LinkedHashMap<>();
-    Map<Product, Integer> tempShoppingList = new LinkedHashMap<>();
+    Map<Product, Integer> shoppingList = new LinkedHashMap<>();
+    List<Product> sortedShoppingList = new ArrayList<>();
     Scanner input = new Scanner(System.in);
     MainFrame mainFrame = new MainFrame(this);
     String fileLocation;
     Boolean remove = false;
-       
+    private int productCounter = 0;
+    private String scannedProduct;
 
     void demo() {
-        //For Ava
-        //fileLocation = "C:\\Users\\s156229\\Documents\\GitHub\\USE-aps-system\\database.txt";
-        //For Lisan
-        fileLocation = "C:\\Users\\s153944\\Documents\\GitHub\\USE-aps-system\\database.txt";
+        //For all
+        fileLocation = "./database.txt";
         try {
             products = makeDatabase();
         } catch (FileNotFoundException ex) {
@@ -64,8 +67,10 @@ public class APS {
         }
         mainFrame.setFirstTimePay();
         mainFrame.setFirstTimeRemove();
+        mainFrame.setFirstTimeHelp();
+        mainFrame.setFirstTimeActuallyRemove();
+        mainFrame.setFirstTimeNewProduct();
         mainFrame.showTime();
-        mainFrame.showInstruction();
         mainFrame.setTotalPrice(formatPrice(0) + "\n");
         mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainFrame.dispose();
@@ -74,25 +79,53 @@ public class APS {
     }
 
     void addProduct(Product product) {
-        if (!remove) {
-            if (shoppingList.containsKey(product)) {
-                tempShoppingList.put(product, shoppingList.get(product) + 1);
-                shoppingList.remove(product);
-                shoppingList.putAll(tempShoppingList);
-            } else {
-                shoppingList.put(product, 1);
-            }
+        if (shoppingList.containsKey(product)) {
+            shoppingList.put(product, shoppingList.get(product) + 1);
         } else {
-            int temp;
-            tempShoppingList.put(product, shoppingList.get(product) - 1);
-            temp = tempShoppingList.get(product);
-            shoppingList.remove(product);
-            if (temp > 0){
-                shoppingList.putAll(tempShoppingList);
-            }
-            remove = false;
+            shoppingList.put(product, 1);
+            sortedShoppingList.add(product);
         }
-        mainFrame.showShoppingList(shoppingList);
+
+        mainFrame.showShoppingList();
+        mainFrame.showTime();
+    }
+    
+    void addNewProductFrame(String scannedString){
+        mainFrame.createAndShowFrame5();
+        this.scannedProduct = scannedString;
+    }
+    
+    void addNewProduct(String name, String price){
+        try (FileWriter fw = new FileWriter(fileLocation, true);
+                        BufferedWriter bw = new BufferedWriter(fw);
+                        PrintWriter out = new PrintWriter(bw)) {
+                    out.println("");
+                    out.print(scannedProduct + "; " + name + "; " + price);
+                    Product thisProduct = new Product(scannedProduct, name, Double.parseDouble(price));
+                    
+                    products.add(thisProduct);
+                } catch (IOException exception) {
+                    //exception handling left as an exercise for the reader
+                }
+                
+        Product p = getProductByEan(scannedProduct);
+                
+        addProduct(p);
+    }
+
+    void removeProduct(Product product) {
+        shoppingList.put(product, shoppingList.get(product) - 1);
+        if (shoppingList.get(product) == 0){
+            sortedShoppingList.remove(product);
+        }
+        mainFrame.showShoppingList();
+        mainFrame.showTime();
+    }
+    
+    void removeProductAll(Product product) {
+        shoppingList.remove(product);
+        sortedShoppingList.remove(product);
+        mainFrame.showShoppingList();
         mainFrame.showTime();
     }
 
@@ -119,8 +152,6 @@ public class APS {
     }
 
     public Product getProductByEan(String ean) throws IllegalArgumentException {
-        System.out.println(ean);
-        System.out.println(products);
         for (Product p
                 : products) {
             String productEan = p.getEan();
@@ -129,6 +160,18 @@ public class APS {
             }
         }
         //throw new IllegalArgumentException("product is not in database"); 
+        return null;
+    }
+
+    public Product getProductByName(String name) throws IllegalArgumentException {
+        for (Product p
+                : products) {
+            String productName = p.getName();
+            if (name.equals(productName)) {
+                return p;
+            }
+        }
+
         return null;
     }
 
@@ -168,14 +211,14 @@ public class APS {
         return formatPrice(total);
     }
 
-    static void emptyShoppingList() {
+    public void emptyShoppingList() {
         shoppingList.clear();
-        String[] args;
-        args = new String[1];
-        main(args);
+        sortedShoppingList.clear();
+        mainFrame.showShoppingList();
     }
-    
-    public void setRemoveBoolean(boolean remove){
+
+    public void setRemoveBoolean(boolean remove) {
         this.remove = remove;
     }
+
 }
