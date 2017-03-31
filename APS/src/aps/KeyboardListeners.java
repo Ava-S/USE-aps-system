@@ -38,7 +38,7 @@ public class KeyboardListeners implements KeyListener {
 
         if (code == 10) {
             newTime = System.currentTimeMillis();
-            if (productEan.equals(scannedString) && newTime - time < 5000) {
+            if (productEan.equals(scannedString) && newTime - time < 1000) {
                 scannedString = "";
                 return;
             }
