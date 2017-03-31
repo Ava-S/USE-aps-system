@@ -990,6 +990,8 @@ public class MainFrame extends javax.swing.JFrame {
                     productPrice += ".00";
                 }
                 aps.addNewProduct(productName, productPrice);
+                nameField.setText("");
+                priceField.setText("");
                 jFrame5.setVisible(false);
             }
         }
@@ -1162,7 +1164,6 @@ public class MainFrame extends javax.swing.JFrame {
 //        jFrame2.pack();
         if (firstTime) {
             frame.setUndecorated(true);
-            firstTime = false;
         }
         frame.setVisible(true);
     }
@@ -1212,7 +1213,7 @@ public class MainFrame extends javax.swing.JFrame {
         jFrame4.setVisible(true);
     }
     
-    public void createAndShowFrame5() {
+    public void showNewProductFrame() {
         createFrame(jFrame5, jLabel6, firstTimeNewProduct);
         firstTimeNewProduct = false;
 

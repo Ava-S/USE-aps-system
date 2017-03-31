@@ -30,5 +30,5 @@
 8712100619922; Lipton Earl Grey; 1.89
 8718265743489; AH Melba Toast; 0.71
 8727500033094; Blooker Cacao; 1.89
+83704220; Boer'n Yoghurt ; 1.99
 60200340; Thumb Wrestling; 9.99
-87304220; Boer'n Yoghurt; 1.50

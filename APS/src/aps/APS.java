@@ -5,8 +5,6 @@
  */
 package aps;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,21 +12,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
- *
  * @author s156229
  */
 
@@ -44,7 +38,7 @@ import javax.swing.JPanel;
  */
 public class APS {
 
-    List<Product> products;
+    List<Product> products = new ArrayList<>();
     //This is a list of all the products that the customer buys
     //The key is the product he bought, 
     //and the value is the quantity of this product
@@ -89,39 +83,39 @@ public class APS {
         mainFrame.showShoppingList();
         mainFrame.showTime();
     }
-    
-    void addNewProductFrame(String scannedString){
-        mainFrame.createAndShowFrame5();
+
+    void addNewProductFrame(String scannedString) {
+        mainFrame.showNewProductFrame();
         this.scannedProduct = scannedString;
     }
-    
-    void addNewProduct(String name, String price){
+
+    void addNewProduct(String name, String price) {
         try (FileWriter fw = new FileWriter(fileLocation, true);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        PrintWriter out = new PrintWriter(bw)) {
-                    out.println("");
-                    out.print(scannedProduct + "; " + name + "; " + price);
-                    Product thisProduct = new Product(scannedProduct, name, Double.parseDouble(price));
-                    
-                    products.add(thisProduct);
-                } catch (IOException exception) {
-                    //exception handling left as an exercise for the reader
-                }
-                
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            out.println("");
+            out.print(scannedProduct + "; " + name + "; " + price);
+            Product thisProduct = new Product(scannedProduct, name, Double.parseDouble(price));
+
+            products.add(thisProduct);
+        } catch (IOException exception) {
+            //exception handling left as an exercise for the reader
+        }
+
         Product p = getProductByEan(scannedProduct);
-                
+
         addProduct(p);
     }
 
     void removeProduct(Product product) {
         shoppingList.put(product, shoppingList.get(product) - 1);
-        if (shoppingList.get(product) == 0){
+        if (shoppingList.get(product) == 0) {
             sortedShoppingList.remove(product);
         }
         mainFrame.showShoppingList();
         mainFrame.showTime();
     }
-    
+
     void removeProductAll(Product product) {
         shoppingList.remove(product);
         sortedShoppingList.remove(product);
@@ -135,9 +129,13 @@ public class APS {
                 new File(fileLocation));
         while (s.hasNext()) {
             String line = s.nextLine();
+
+            if (line.trim().equalsIgnoreCase("")) {
+                continue;
+            }
+
             String[] array = line.split(";");
-            Product newProduct;
-            newProduct = new Product(array[0], array[1], Double.parseDouble(
+            Product newProduct = new Product(array[0], array[1], Double.parseDouble(
                     array[2]));
             database.add(newProduct);
         }
