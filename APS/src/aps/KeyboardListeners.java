@@ -50,32 +50,18 @@ public class KeyboardListeners implements KeyListener {
             if (p != null) {
                 aps.addProduct(p);
             } else {
-                System.out.println(
-                        "The product you scanned in not in our database");
-                System.out.println("The barcode is " + scannedString);
-                System.out.println("What is the name of your product?");
-                String name = sc.nextLine();
-                System.out.println("What is the price of your product?");
-                String price = sc.nextLine();
-                System.out.println("The data you put in is this: "
-                        + scannedString + " " + name + " " + price);
-
-                try (FileWriter fw = new FileWriter(aps.fileLocation, true);
-                        BufferedWriter bw = new BufferedWriter(fw);
-                        PrintWriter out = new PrintWriter(bw)) {
-                    out.println("");
-                    out.print(scannedString + "; " + name + "; " + price);
-                    Product thisProduct = new Product(scannedString, name, Double.parseDouble(price));
-                    
-                    aps.products.add(thisProduct);
-                } catch (IOException exception) {
-                    //exception handling left as an exercise for the reader
-                }
+                aps.addNewProductFrame(scannedString);
+//                System.out.println(
+//                        "The product you scanned in not in our database");
+//                System.out.println("The barcode is " + scannedString);
+//                System.out.println("What is the name of your product?");
+//                String name = sc.nextLine();
+//                System.out.println("What is the price of your product?");
+//                String price = sc.nextLine();
+//                System.out.println("The data you put in is this: "
+//                        + scannedString + " " + name + " " + price);
+//
                 
-                p = aps.getProductByEan(scannedString);
-                
-                System.out.println("P: " + p);
-                aps.addProduct(p);
             }
 
             scannedString = "";
