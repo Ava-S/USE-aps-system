@@ -94,7 +94,7 @@ public class APS {
              BufferedWriter bw = new BufferedWriter(fw);
              PrintWriter out = new PrintWriter(bw)) {
             out.println("");
-            out.print(scannedProduct + "; " + name + "; " + price);
+            out.print(scannedProduct + ";" + name + ";" + price);
             Product thisProduct = new Product(scannedProduct, name, Double.parseDouble(price));
 
             products.add(thisProduct);
