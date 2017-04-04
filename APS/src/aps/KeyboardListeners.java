@@ -50,18 +50,7 @@ public class KeyboardListeners implements KeyListener {
             if (p != null) {
                 aps.addProduct(p);
             } else {
-                aps.addNewProductFrame(scannedString);
-//                System.out.println(
-//                        "The product you scanned in not in our database");
-//                System.out.println("The barcode is " + scannedString);
-//                System.out.println("What is the name of your product?");
-//                String name = sc.nextLine();
-//                System.out.println("What is the price of your product?");
-//                String price = sc.nextLine();
-//                System.out.println("The data you put in is this: "
-//                        + scannedString + " " + name + " " + price);
-//
-                
+                aps.addNewProductFrame(scannedString);                
             }
 
             scannedString = "";

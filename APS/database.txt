@@ -36,3 +36,5 @@
 8714100616888;Lipton Ice Tea Green;1.89
 8712100619922;Lipton Earl Grey;1.89
 9789045319483;Galgje Boekje;4.99
+5449000006721;Fanta Cassis;0.70
+420824101;Sanifair Bon;0.50

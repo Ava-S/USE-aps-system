@@ -46,6 +46,7 @@ public class MainFrame extends javax.swing.JFrame {
     private boolean firstTimeHelp;
     private boolean firstTimeActuallyRemove;
     private boolean firstTimeNewProduct;
+
     /**
      * Creates new form MainFrame
      */
@@ -821,7 +822,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 42, Short.MAX_VALUE))
                     .addComponent(timeGreetArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -872,6 +873,30 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1RemoveActionPerformed
+
+        passwordField.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println("pressed: " + e.getKeyChar());
+                if (e.getKeyChar() == 10){
+                    okButton.doClick();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
+        
+
         createFrame(jFrame3, jLabel3, firstTimeRemove);
         jLabel4.setHorizontalAlignment(JLabel.RIGHT);
         incorrectLabel.setVisible(false);
@@ -930,7 +955,7 @@ public class MainFrame extends javax.swing.JFrame {
             incorrectLabel.setVisible(true);
             System.out.println("incorrect");
         }
-        
+
         passwordField.setText("");
     }//GEN-LAST:event_okButtonActionPerformed
 
@@ -969,22 +994,27 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         String productName = nameField.getText();
-        if (productName.length() == 0){
-            maxCharLabel.setText("<html> <font color=\"red\"> Provide a name for the product. </font> </html>");
-        } else if (productName.length() > 20){
-            maxCharLabel.setText("<html> <font color=\"red\"> Exceeded 20 characters. </font> </html>");
+        if (productName.length() == 0) {
+            maxCharLabel.setText(
+                    "<html> <font color=\"red\"> Provide a name for the product. </font> </html>");
+        } else if (productName.length() > 20) {
+            maxCharLabel.setText(
+                    "<html> <font color=\"red\"> Exceeded 20 characters. </font> </html>");
         } else {
             maxCharLabel.setText("Maximum of 20 characters");
             String productPrice = priceField.getText();
-            if (productPrice.contains(",")){
-                seperatorLabel.setText("<html> <font color=\"red\"> Don't use , as seperator. </font> </html>");
-            } else if (productPrice.length() == 0){
-                seperatorLabel.setText("<html> <font color=\"red\"> Provide a price for the product. </font> </html>");
+            if (productPrice.contains(",")) {
+                seperatorLabel.setText(
+                        "<html> <font color=\"red\"> Don't use , as seperator. </font> </html>");
+            } else if (productPrice.length() == 0) {
+                seperatorLabel.setText(
+                        "<html> <font color=\"red\"> Provide a price for the product. </font> </html>");
             } else if (!productPrice.matches("[0-9.]+")) {
-                seperatorLabel.setText("<html> <font color=\"red\"> Don't use letters in the price. </font> </html>");
+                seperatorLabel.setText(
+                        "<html> <font color=\"red\"> Don't use letters in the price. </font> </html>");
             } else {
                 seperatorLabel.setText("Use . as seperator.");
-                if (!productPrice.contains(".")){
+                if (!productPrice.contains(".")) {
                     productPrice += ".00";
                 }
                 aps.addNewProduct(productName, productPrice);
@@ -1102,14 +1132,16 @@ public class MainFrame extends javax.swing.JFrame {
         String textProductQuantity = "";
         String textProductPrice = "";
         String textTotalPrice = aps.getTotal();
-        
-        for (int i = 0; i < aps.sortedShoppingList.size(); i++){
+
+        for (int i = 0;
+                i < aps.sortedShoppingList.size();
+                i++) {
             Product p = aps.sortedShoppingList.get(i);
             int quantity = aps.shoppingList.get(p);
             textProductName += p.getName() + "\n";
             textProductQuantity += quantity + "x \n";
             textProductPrice += APS.formatPrice(quantity * p.getPrice())
-                    + "\n"; 
+                    + "\n";
         }
 //        for (Map.Entry<Product, Integer> entry
 //                : aps.shoppingList.entrySet()) {
@@ -1210,10 +1242,32 @@ public class MainFrame extends javax.swing.JFrame {
         createList(listOfItems);
         jFrame4.setVisible(true);
     }
-    
+
     public void showNewProductFrame() {
         createFrame(jFrame5, jLabel6, firstTimeNewProduct);
         firstTimeNewProduct = false;
+        
+        priceField.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println("pressed: " + e.getKeyChar());
+                if (e.getKeyChar() == 10){
+                    addButton.doClick();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
 
         jFrame5.setVisible(true);
     }
