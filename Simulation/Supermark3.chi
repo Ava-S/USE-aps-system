@@ -1,0 +1,496 @@
+type customer = tuple(  real entrytime;                             # Data type customer with entrytime, number of products and age
+                        int nrofproducts;
+                        int BigGroceries;
+                        int PeakTime;
+                        int ProductsUnloaded;
+                        int ProductsLoaded;
+                        int age;
+                        int dayentered;
+                        int customernr
+                        );
+
+type product = tuple(   real price;
+                        int customernr;
+                        bool scanned
+                        );
+
+type conv_product = tuple(  product z;
+                            timer t);
+
+const   int hourtosec = 60*60,
+        int daytosec = 24*60*60,
+        int openingtime = 8,
+        int closingtime = 20,
+        int NumberOfCustomers = 20000,
+        int NumberOfCheckouts = 10;
+
+xper X():
+    real NumberOfCashiers;
+        for i in range(NumberOfCheckouts+1):
+        NumberOfCashiers =  M(NumberOfCheckouts - i,i);
+        end
+end
+
+model real M(int NumberOfCashiers; int NumberOfAPS):
+    chan customer a, b, c;
+    chan bool d;
+        writeln("M: Number of cashiers: %s; Number of APS: %s", NumberOfCashiers, NumberOfAPS);
+    run
+        GenerateCustomers(a,d),
+        DemandBuffer(a,c),
+        unwind i in range(1,NumberOfCashiers+1):
+            UCoCaCoBL(c, b),
+        end
+        unwind j in range(1,NumberOfAPS+1):
+            UCoAPSCoBL(c,b)
+        end
+        ExitTest3(b,d);
+exit NumberOfCashiers^1;
+end
+
+proc UCoCaCoBL(chan? customer a; chan! customer b):
+    chan customer c, e;
+    chan product g, h, i, j, l;
+    chan bool k;
+    run Unloading2(a, g, c, k), Conveyor2(g, h), Cashier2(c, h, e, i, k), Conveyor2(i, j), Buffer(j, l), Loading(e, l, b);
+end
+
+proc UCoAPSCoBL(chan? customer a; chan! customer b):
+    chan customer c, e;
+    chan product g, h, i, j, l;
+    chan bool k;
+    run Unloading2(a, g, c, k), Conveyor2(g, h), APS2(c, h, e, i, k), Conveyor2(i, j), Buffer(j, l), Loading(e, l, b);
+end
+
+proc GenerateCustomers(chan! customer a; chan! bool b):
+    customer x;                                                      # Datatype customer is used: variable x is of type customer
+    bool writeoutput = false;
+    int y = 1;
+    real u, interarrivaltime;
+    dist real dist_age = normal(35.0, 15.0);                         # Average age is 40 with a sd of 20
+    dist real dist_nrproductssmall = normal(10.0,3.0);               # Small groceries have 10 products on average, with a sd of 3
+    dist real dist_nrproductsbig = normal(50.0, 10.0);               # Big groceries have 50 products on average, with a sd of 10
+    dist real dist_bigorsmallgroceries = uniform(0.0, 1.0);          # Big or small groceries
+    dist real dist_arrivaltimepeak = exponential(20.0);            # Peak times 1 minutes between each person
+    dist real dist_arrivaltimedown = exponential(2.0*60);            # Down times 3 minutes between each person
+
+        while (x.customernr < NumberOfCustomers):
+            if ((floor(time) mod daytosec) < (openingtime*hourtosec)) or ((floor(time) mod daytosec) > (closingtime*hourtosec)):
+                interarrivaltime = (60*60.0);
+                if writeoutput:
+                    writeln("Store not open, delaying till opening");
+                end
+            end
+            if ((floor(time) mod daytosec) >= (openingtime*hourtosec)) and ((floor(time) mod daytosec) <= (closingtime*hourtosec)):
+                x.age = round(sample dist_age);
+                x.entrytime = time;
+                x.dayentered = floor(time) div daytosec;
+                x.customernr = y;
+                x.ProductsUnloaded = 0;
+                u = sample dist_bigorsmallgroceries;
+                if u >= 2/3:
+                    x.nrofproducts = round(sample dist_nrproductsbig);
+                    x.BigGroceries = 1;
+                end
+                if u < 2/3:
+                    x.nrofproducts = round(sample dist_nrproductssmall);
+                    x.BigGroceries = 0;
+                end
+                if ((floor(time) mod daytosec) > (8*hourtosec)) and ((floor(time) mod daytosec) < (10*hourtosec)):
+                    interarrivaltime = sample dist_arrivaltimedown;
+                    x.PeakTime = 0;
+                end
+                if ((floor(time) mod daytosec) > (10*hourtosec)) and ((floor(time) mod daytosec) < (12*hourtosec)):
+                    interarrivaltime = sample dist_arrivaltimepeak;
+                    x.PeakTime = 1;
+                end
+                if ((floor(time) mod daytosec) > (12*hourtosec)) and ((floor(time) mod daytosec) < (13*hourtosec)):
+                    interarrivaltime = sample dist_arrivaltimedown;
+                    x.PeakTime = 0;
+                end
+                if ((floor(time) mod daytosec) > (13*hourtosec)) and ((floor(time) mod daytosec) < (15*hourtosec)):
+                    interarrivaltime = sample dist_arrivaltimepeak;
+                    x.PeakTime = 1;
+                end
+                if ((floor(time) mod daytosec) > (15*hourtosec)) and ((floor(time) mod daytosec) < (18*hourtosec)):
+                    interarrivaltime = sample dist_arrivaltimedown;
+                    x.PeakTime = 0;
+                end
+                if ((floor(time) mod daytosec) > (18*hourtosec)) and ((floor(time) mod daytosec) < (20*hourtosec)):
+                    interarrivaltime = sample dist_arrivaltimepeak;
+                    x.PeakTime = 1;
+                end
+            y = y + 1;
+            a!x;
+            b!true;
+
+            if writeoutput:
+                writeln("G: Sent customer %s into supermarket at time %s", x.customernr, time);
+            end
+
+            end
+
+            delay(interarrivaltime);
+        end
+end
+
+proc DemandBuffer(chan? customer a; chan! customer b):
+    customer x;
+    list customer buffer_customers;
+    bool writeoutput = false;
+    while true:
+        select
+            a?x:
+                buffer_customers = buffer_customers + [x];
+
+                if writeoutput:
+                    writeln("DB: Received customer %s from generator at time %s. DB now has %s customers.", x.customernr, time, size(buffer_customers));
+                end
+        alt
+            not empty(buffer_customers), b!(buffer_customers[0]):
+                buffer_customers = buffer_customers[1:];
+
+                if writeoutput:
+                    writeln("DB: Sent customer %s to checkout at time %s. DB now has %s customers.", x.customernr, time, size(buffer_customers));
+                end
+        end
+    end
+end
+
+proc Unloading2(chan? customer a; chan! product b; chan! customer c; chan! bool d):
+    customer x;
+    product z;
+    bool CustomerUnloading = false, AllProductsUnloaded = false, CustomerIsReady = false;
+    bool writeoutput = false;
+    real UnloadingTime = 1.0;
+    timer t;
+    while true:
+        select
+            not CustomerUnloading, a?x:
+                CustomerUnloading = true;
+                t = timer(UnloadingTime);
+
+                if writeoutput:
+                    writeln("U: Customer %s received at time %s", x.customernr,time);
+                end
+        alt
+            CustomerUnloading and ready(t) and not AllProductsUnloaded, b!z:
+                x.ProductsUnloaded = x.ProductsUnloaded + 1;
+
+                if writeoutput:
+                writeln("U: Customer unloaded 1 product at time %s, still has %s products to unload", time, (x.nrofproducts - x.ProductsUnloaded));
+                end
+
+                t = timer(UnloadingTime);
+                if x.ProductsUnloaded == x.nrofproducts:
+                    CustomerIsReady = true;
+                    d!CustomerIsReady;
+
+                    if writeoutput:
+                    writeln("U: Sent to cashier that customer is fully unloaded at time %s", time);
+                    end
+
+                    AllProductsUnloaded = true;
+                end
+        alt
+            CustomerUnloading and ready(t) and AllProductsUnloaded, c!x:
+                CustomerUnloading = false;
+                AllProductsUnloaded = false;
+                CustomerIsReady = false;
+
+                if writeoutput:
+                writeln("U: Sent customer to cashier at time %s", time);
+                end
+        end
+    end
+end
+
+proc Cashier2(chan? customer a; chan? product b; chan! customer c; chan! product d; chan? bool e):
+    customer x;
+    product z;
+    real meanhandlingtime = 5.0,
+         sdhandlingtime = 0.5,
+         paymenttime = 10.0;
+    bool ServingCustomer = false, CustomerUnloaded = false, HasProduct = false;
+    bool writeoutput = false;
+    int ProductCount = 0;
+    dist real dist_handlingtime = normal(meanhandlingtime, sdhandlingtime);
+    timer t;
+    while true:
+        select
+            not ServingCustomer, e?CustomerUnloaded:
+
+                if writeoutput:
+                writeln("C: Received that customer is unloaded at time %s", time);
+                end
+        alt
+            CustomerUnloaded, a?x:
+                ServingCustomer = true;
+                CustomerUnloaded = false;
+
+                if writeoutput:
+                writeln("C: Received customer %5s at time %s", x.customernr, time);
+                end
+        alt
+            not HasProduct, b?z:
+                t = timer(sample dist_handlingtime);
+                HasProduct= true;
+
+                if writeoutput:
+                writeln("C: Received product at time %s", time);
+                end
+        alt
+            HasProduct and ready(t), d!z:
+                ProductCount = ProductCount + 1;
+                HasProduct = false;
+
+                if writeoutput:
+                writeln("C: Handled and sent product at time %s", time);
+                end
+        alt
+            ServingCustomer and (x.nrofproducts == ProductCount):
+                delay(paymenttime);
+                c!x;
+                ProductCount = 0;
+                ServingCustomer = false;
+
+                if writeoutput:
+                writeln("C: Customer paid and sent at time %s", time);
+                end
+        end
+    end
+end
+
+proc APS2(chan? customer a; chan? product b; chan! customer c; chan! product d; chan? bool e):
+    customer x;
+    product z;
+    real meanhandlingtime = 3.0,
+         sdhandlingtime = 0.5,
+         paymenttime = 20.0,
+         meanmaintenancetime = 10*60.0,
+         sdmaintenancetime = 4*60.0,
+         u;
+    bool ServingCustomer = false, CustomerUnloaded = false, HasProduct = false;
+    bool writeoutput = false;
+    int ProductCount = 0;
+    dist real dist_handlingtime = normal(meanhandlingtime, sdhandlingtime);
+    dist real dist_failuretime = uniform(0.0,1.0);
+    dist real dist_maintenancetime = normal(meanmaintenancetime, sdmaintenancetime);
+    timer t;
+    while true:
+            select
+                not ServingCustomer, e?CustomerUnloaded:
+
+                    if writeoutput:
+                    writeln("APS: Received that customer is unloaded at time %s", time);
+                    end
+            alt
+                CustomerUnloaded, a?x:
+                    ServingCustomer = true;
+                    CustomerUnloaded = false;
+
+                    if writeoutput:
+                    writeln("APS: Received customer at time %s", time);
+                    end
+            alt
+                not HasProduct, b?z:
+                    u = sample dist_failuretime;
+
+                    if u < 0.999:
+                    t = timer(sample dist_handlingtime);
+                    HasProduct= true;
+
+                    if writeoutput:
+                    writeln("APS: Received product at time %s", time);
+                    end
+
+                    end
+
+                    if u > 0.999:
+                    t = timer(sample dist_maintenancetime);
+                    HasProduct = true;
+
+                    if writeoutput:
+                    writeln("APS: Breakdown. Station is being repaired at time %s", time);
+                    end
+
+                    end
+            alt
+                HasProduct and ready(t), d!z:
+                    ProductCount = ProductCount + 1;
+                    HasProduct = false;
+
+                    if writeoutput:
+                    writeln("APS: Handled and sent product at time %s", time);
+                    end
+            alt
+                ServingCustomer and (x.nrofproducts == ProductCount):
+                    delay(paymenttime);
+                    c!x;
+                    ProductCount = 0;
+                    ServingCustomer = false;
+
+                    if writeoutput:
+                    writeln("APS: Customer paid and sent at time %s", time);
+                    end
+            end
+    end
+end
+
+proc Conveyor2(chan? product a; chan! product b):
+    product z;
+    real conv_time = 10.0;
+    int conv_size = 60;
+    list conv_product conv_items;
+    bool writeoutput = false;
+    while true:
+        select
+            size(conv_items) < conv_size, a?z:
+                conv_items = conv_items  + [(z, timer(conv_time))];
+
+                if writeoutput:
+                writeln("Co: Received item at time %s, adding it to conveyor. Conveyor now has %s products.", time, size(conv_items));
+                end
+        alt
+            not empty(conv_items) and ready(conv_items[0].t), b!conv_items[0].z:
+                conv_items = conv_items[1:];
+
+                if writeoutput:
+                writeln("Co: Item sent from conveyor at time %s. Conveyer still has %s items.", time, size(conv_items));
+                end
+        end
+    end
+end
+
+proc Buffer(chan? product a; chan! product b):
+    product z;
+    int Buffer_size = 100;
+    list product buffer_items;
+    bool writeoutput = false;
+    while true:
+        select
+            size(buffer_items) < Buffer_size, a?z:
+                buffer_items = buffer_items + [z];
+
+                if writeoutput:
+                writeln("B: Product stored in buffer at time %s. Buffer now has %s products", time, size(buffer_items));
+                end
+        alt
+            b!z:
+                buffer_items = buffer_items[1:];
+
+                if writeoutput:
+                writeln("B: Product taken from buffer at time %s. Buffer now has %s products", time, size(buffer_items));
+                end
+        end
+    end
+end
+
+proc Loading(chan? customer a; chan? product b; chan! customer c):
+    customer x;
+    product z;
+    bool CustomerLoading = false, AllProductsLoaded = false, CustomerIsReady = false;
+    bool writeoutput = false;
+    real LoadingTime = 1.0;
+    timer t;
+    while true:
+        select
+            not CustomerLoading, a?x:
+                CustomerLoading = true;
+                t = timer(LoadingTime);
+
+                if writeoutput:
+                writeln("L: Customer received at time %s", time);
+                end
+        alt
+            CustomerLoading and ready(t) and not AllProductsLoaded, b?z:
+                x.ProductsLoaded = x.ProductsLoaded + 1;
+
+                if writeoutput:
+                writeln("L: Customer loaded 1 product at time %s, still has %s products to load", time, (x.nrofproducts - x.ProductsLoaded));
+                end
+
+                t = timer(LoadingTime);
+                if x.ProductsLoaded == x.nrofproducts:
+                    CustomerIsReady = true;
+
+                    if writeoutput:
+                    writeln("L: Customer is fully loaded at time %s", time);
+                    end
+
+                    AllProductsLoaded = true;
+                end
+       alt
+            CustomerLoading and ready(t) and AllProductsLoaded, c!x:
+                CustomerLoading = false;
+                AllProductsLoaded = false;
+                CustomerIsReady = false;
+
+                if writeoutput:
+                writeln("L: Sent customer to exit at time %s", time);
+                end
+        end
+    end
+end
+
+proc real ExitTest3(chan? customer a; chan? bool b):
+    customer x;
+    bool GSentCustomer;
+    int reducedtimesec, reducedtimeh, reducedtimemin;
+    real flowtime;
+    int WIP = 0;
+    real WIP_mean, Flowtime_mean, Throughput_mean;
+    real Flowtime_big_mean, Throughput_big_mean, Flowtime_small_mean, Throughput_small_mean;
+    int counterall = 1, counterbig = 1, countersmall = 1;
+
+    while true:
+        select
+            a?x:
+                reducedtimesec = floor(time) mod (daytosec);                                                           # reducing to seconds each day
+                reducedtimeh = reducedtimesec div (hourtosec);                                                         # reducing reduced seconds to hours
+                reducedtimemin = floor((reducedtimesec - reducedtimeh*hourtosec)/60);
+
+                WIP = WIP - 1;
+                flowtime = time-x.entrytime;
+
+                # Big groceries
+                if x.BigGroceries == 1:
+                    Flowtime_big_mean = Flowtime_big_mean * (counterbig-1)/counterbig + 1/counterbig * flowtime;
+                    Throughput_big_mean = counterbig/time*60;
+                    counterbig = counterbig + 1;
+
+                    writeln("E: Mean throughput big groceries [customers/min]: %5s; Mean flowtime big groceries [seconds]: %5s",
+                            Throughput_big_mean, Flowtime_big_mean);
+
+                # Small groceries
+                else:
+                    Flowtime_small_mean = Flowtime_small_mean * (countersmall-1)/countersmall + 1/counterbig * flowtime;
+                    Throughput_small_mean = countersmall/time*60;
+                    countersmall = countersmall + 1;
+                    writeln("E: Mean throughput small groceries [customers/min]: %5s; Mean flowtime small groceries [seconds]: %5s",
+                           Throughput_small_mean, Flowtime_small_mean);
+                end
+                # Total
+                Flowtime_mean = Flowtime_mean * (counterall - 1)/counterall + 1/counterall * flowtime;
+                Throughput_mean = counterall/time*60;
+                WIP_mean = WIP_mean * (counterall - 1)/counterall + 1/counterall * WIP;
+                counterall = counterall + 1;
+                    writeln("E: Customerid: %5s; Nr of products: %2s, Day: %s; Time: %2s:%2s, Time spent: %s; Time: %s",
+                    x.customernr, x.nrofproducts, x.dayentered, reducedtimeh, reducedtimemin, flowtime, time);
+
+                if (counterall - 1) == (NumberOfCustomers):
+                    writeln("Mean throughput small groceries [customers/min]: %5s; \nMean flowtime small groceries [seconds]: %5s",
+                          Throughput_small_mean, Flowtime_small_mean);
+                    writeln("Mean throughput big groceries [customers/min]: %5s; \nMean flowtime big groceries [seconds]: %5s",
+                            Throughput_big_mean, Flowtime_big_mean);
+                    writeln("Mean throughput: %5f; \nMean flowtime: %5f; \nMean WIP: %4f", Throughput_mean, Flowtime_mean, WIP_mean);
+                    #writeln("%s %s %s %s %s %s %s", Throughput_small_mean, Flowtime_small_mean, Throughput_big_mean, Flowtime_big_mean, Throughput_mean, Flowtime_mean, WIP_mean);
+                    exit Throughput_mean;
+                end
+        alt
+            b?GSentCustomer:
+                WIP = WIP + 1;
+        end
+
+    end
+end
